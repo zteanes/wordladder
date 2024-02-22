@@ -1,1 +1,1 @@
-package wordladder
+package main

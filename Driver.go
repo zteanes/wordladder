@@ -1,4 +1,4 @@
-package wordladder
+package main
 
 import (
 	"errors"
@@ -7,36 +7,33 @@ import (
 	"os"
 )
 
-func testArgs(args []string) bool {
-	goodArgs := true
+func testArgs(args []string) {
 	// ensure correct amount of args was given
 	if len(args) != 3 {
-		fmt.Println("Usage: wordladder <dictionary> <start> <end>")
-		goodArgs = false
+		fmt.Println("\nUsage: wordladder <dictionary> <start> <end>")
+		os.Exit(1)
 	}
 
 	// ensure the start and end words are the same length
-	if len(args[1]) != len(args[2]) && goodArgs {
-		fmt.Println("The start and end words must be the same length.")
-		goodArgs = false
+	if len(args[1]) != len(args[2]) {
+		fmt.Println("\nThe start and end words must be the same length.")
+		os.Exit(1)
 	}
 
 	// ensure the dictionary files exists
 	//
-	if _, err := os.Stat(args[0]); errors.Is(err, fs.ErrNotExist) && goodArgs {
-		fmt.Println("The dictionary file does not exist.")
-		goodArgs = false
+	if _, err := os.Stat(args[0]); errors.Is(err, fs.ErrNotExist) {
+		fmt.Println("\nThe dictionary file does not exist.")
+		os.Exit(1)
 	}
-
-	return goodArgs
 }
 
+// This is our main function for entering the program. It will take command line
+// arguments and then call the appropriate functions to build the word ladder.
 func main() {
 	// get the arguments and see if they are valid
 	args := os.Args[1:]
-	if testArgs(args) {
-
-	}
+	testArgs(args)
 
 	fmt.Println("Hello, World!")
 }
